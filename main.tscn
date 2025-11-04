@@ -1,0 +1,45 @@
+[gd_scene load_steps=10 format=3 uid="uid://dk0rl6afa043p"]
+
+[ext_resource type="Shader" uid="uid://bpfcqj5rl3rfs" path="res://custom_particle.gdshader" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://cu71vam1yybf7" path="res://Main.cs" id="1_272bh"]
+[ext_resource type="Script" uid="uid://6g0wf7ngg6uf" path="res://ParticleController.cs" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://teguml6vh724" path="res://PhysicsChain.cs" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://b2fqoa0evwv1s" path="res://LaserDetector.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://dc6atyg8lqyd2" path="res://Player.cs" id="5_7mycd"]
+[ext_resource type="Texture2D" uid="uid://dofpgvl8vtmi7" path="res://icon.svg" id="5_lquwl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
+shader = ExtResource("1_1bvp3")
+shader_parameter/wave_intensity = 0.1
+shader_parameter/wave_frequency = 10.0
+shader_parameter/time_scale = 1.0
+shader_parameter/color_start = Color(1, 0.5, 0, 1)
+shader_parameter/color_end = Color(1, 0, 0.5, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7mycd"]
+radius = 20.025
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_272bh")
+
+[node name="ParticleSystem" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_lquwl")
+script = ExtResource("1_ig7tw")
+WaveIntensity = 5.0
+
+[node name="PhysicsDemo" type="Node2D" parent="."]
+script = ExtResource("2_0xm2m")
+
+[node name="LaserSystem" type="Node2D" parent="."]
+script = ExtResource("3_h2yge")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(274, 263)
+scale = Vector2(0.25, 0.25)
+script = ExtResource("5_7mycd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_7mycd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("5_lquwl")
